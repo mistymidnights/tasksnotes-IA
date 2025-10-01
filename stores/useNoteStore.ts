@@ -6,7 +6,7 @@ import { addToast } from "@heroui/toast";
 // ----------------- TIPOS DE DATOS -----------------
 
 export interface Note {
-  id: string;
+  id?: string;
   user_id: string;
   title: string;
   description: string;
@@ -21,6 +21,9 @@ interface NoteState {
   addNoteLocally: (newNote: Note) => void;
   updateNoteLocally: (noteId: string, updates: Partial<Note>) => void;
   deleteNoteLocally: (noteId: string) => void;
+  createNote: (
+    note: Omit<Note, "id" | "created_at" | "updated_at">
+  ) => Promise<void>;
   saveNote: (note: Note) => Promise<void>;
   deleteNote: (noteId: string) => Promise<void>;
   clearNotes: () => void;
@@ -34,6 +37,7 @@ export const useNoteStore = create(
       notes: [],
       loading: true,
 
+      // --- GET ---
       fetchNotes: async (userId) => {
         set({ loading: true });
         try {
@@ -59,8 +63,11 @@ export const useNoteStore = create(
         }
       },
 
+      // --- CLEAR ---
+
       clearNotes: () => set({ notes: [], loading: false }),
 
+      // --- LOCAL UPDATES ---
       addNoteLocally: (newNote) => {
         set((state) => ({
           notes: [newNote, ...state.notes],
@@ -83,6 +90,37 @@ export const useNoteStore = create(
           notes: state.notes.filter((note) => note.id !== noteId),
         }));
       },
+
+      // --- CREATE / insert ---
+
+      createNote: async (newNoteData) => {
+        try {
+          const { data, error } = await supabase
+            .from("notes")
+            .insert(newNoteData)
+            .select()
+            .single();
+
+          if (error) throw error;
+
+          get().addNoteLocally(data as Note);
+
+          addToast({
+            title: "Nota creada",
+            description: "Tu nueva nota ha sido guardada.",
+            color: "success",
+          });
+        } catch (error) {
+          addToast({
+            title: "Error al crear nota",
+            description: "No se pudo sincronizar la nota con la base de datos.",
+            color: "danger",
+          });
+          console.error("Fallo la acción de crear nota:", error);
+        }
+      },
+
+      // --- UPDATE / upsert ---
 
       saveNote: async (note) => {
         try {
@@ -112,6 +150,7 @@ export const useNoteStore = create(
         }
       },
 
+      // --- DELETE ---
       deleteNote: async (noteId) => {
         const noteToDelete = get().notes.find((n) => n.id === noteId);
         if (!noteToDelete) return;
@@ -127,12 +166,19 @@ export const useNoteStore = create(
           if (error) {
             addToast({
               title: "Error al eliminar nota",
+              description: "La nota se restauró localmente.",
               color: "danger",
             });
             console.error("Error Supabase al eliminar:", error);
             get().addNoteLocally(noteToDelete);
             throw new Error(error.message);
           }
+
+          addToast({
+            title: "Nota eliminada",
+            description: "La nota ha sido eliminada.",
+            color: "success",
+          });
         } catch (error) {
           console.error("Fallo la eliminación de nota:", error);
         }
