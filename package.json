@@ -16,7 +16,7 @@
     "@heroui/link": "2.2.22",
     "@heroui/listbox": "2.3.24",
     "@heroui/navbar": "2.2.23",
-    "@heroui/react": "^2.8.3",
+    "@heroui/react": "^2.8.4",
     "@heroui/snippet": "2.2.26",
     "@heroui/switch": "2.2.23",
     "@heroui/system": "2.4.21",
@@ -24,6 +24,7 @@
     "@react-aria/ssr": "3.9.10",
     "@react-aria/visually-hidden": "3.8.27",
     "@supabase/supabase-js": "^2.57.2",
+    "autoprefixer": "^10.4.21",
     "chart.js": "^4.4.0",
     "clsx": "2.1.1",
     "framer-motion": "11.18.2",
@@ -59,10 +60,10 @@
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-unused-imports": "4.1.4",
     "globals": "16.0.0",
-    "postcss": "8.5.6",
+    "postcss": "^8.5.6",
     "prettier": "3.5.3",
     "tailwind-variants": "3.1.0",
-    "tailwindcss": "4.1.11",
+    "tailwindcss": "^4.1.11",
     "typescript": "5.6.3"
   }
 }

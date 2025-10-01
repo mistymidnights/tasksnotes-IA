@@ -11,12 +11,7 @@ const config = {
     extend: {
       colors: {
         primary: {
-          100: "#e5c1ff",
-          300: "#d698ff",
-          500: "#7d3aae",
-          700: "#2f0f44",
           DEFAULT: "#43175b",
-          foreground: "#ffffff",
         },
         secondary: {
           DEFAULT: "#c2c2c2", // white

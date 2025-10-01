@@ -9,7 +9,7 @@ import { MdDelete } from "react-icons/md";
 import { addToast } from "@heroui/toast";
 import { ReusableModal } from "../ReusableModal ";
 
-const Notes = () => {
+const Tasks = () => {
   const [task, setTask] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState("");
@@ -195,4 +195,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default Tasks;
