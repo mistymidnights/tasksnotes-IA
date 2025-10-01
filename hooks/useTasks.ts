@@ -1,18 +1,17 @@
 import { useEffect } from "react";
-import { useAuth } from "./useAuth";
-import { useTaskStore } from "@/stores/useStore";
+import { useTaskStore, useUserStore } from "@/stores/useStore";
 
 export function useTasks() {
-  const { user } = useAuth();
+  const userId = useUserStore((state) => state.profile?.id);
   const { tasks, loading, fetchTask } = useTaskStore();
 
   useEffect(() => {
-    if (user) {
-      fetchTask(user.id);
+    if (userId) {
+      fetchTask(userId);
     } else {
       useTaskStore.getState().clearTask();
     }
-  }, [user, fetchTask]);
+  }, [userId, fetchTask]);
 
   return { tasks, loading };
 }

@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
-import { Task, useTaskStore } from "@/stores/useStore";
+import { useTaskStore, Task } from "@/stores/useTaskStore";
 import { supabase } from "@/lib/supabaseClient";
 import React, { useState, useCallback } from "react";
 import { useTasks } from "@/hooks/useTasks";

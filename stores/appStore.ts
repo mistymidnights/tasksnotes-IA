@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface AppState {
   pageTitle: string;
@@ -8,6 +8,6 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
-  pageTitle: '',
+  pageTitle: "",
   setPageTitle: (title: string) => set({ pageTitle: title }),
 }));

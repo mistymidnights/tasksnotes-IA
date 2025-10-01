@@ -1,18 +1,17 @@
-import { useEffect } from 'react';
-import { useAuth } from './useAuth';
-import { useUserStore } from '@/stores/useStore';
+import { useEffect } from "react";
+import { useUserStore } from "@/stores/useStore";
 
 export function useProfile() {
-  const { user } = useAuth();
+  const userId = useUserStore((state) => state.profile?.id);
   const { profile, loading, fetchProfile } = useUserStore();
 
   useEffect(() => {
-    if (user) {
-      fetchProfile(user.id);
+    if (userId) {
+      fetchProfile(userId);
     } else {
       useUserStore.getState().clearProfile();
     }
-  }, [user, fetchProfile]);
+  }, [userId, fetchProfile]);
 
   return { profile, loading };
 }
