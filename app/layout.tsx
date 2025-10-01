@@ -38,7 +38,7 @@ export default function RootLayout({
         <Providers>
           <AuthGuard>
             <div className="relative flex flex-col">
-              <main className="container mx-auto px-6 pb-12 sm:pb-4 flex-grow">
+              <main className="container mx-auto px-6 flex-grow">
                 <Header />
                 {children}
               </main>
