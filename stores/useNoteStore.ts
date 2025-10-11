@@ -6,7 +6,7 @@ import { addToast } from "@heroui/toast";
 // ----------------- TIPOS DE DATOS -----------------
 
 export interface Note {
-  id?: string;
+  id: string;
   user_id: string;
   title: string;
   description: string;
