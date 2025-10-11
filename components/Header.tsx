@@ -14,22 +14,34 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/stores/appStore";
 import { Image } from "@heroui/image";
+import { useEffect } from "react";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
-  const { profile } = useUserStore();
+  const { profile, clearProfile, fetchProfile } = useUserStore();
   const { pageTitle } = useAppStore();
+
+  const EXCLUDED_PATHS = ["/auth/login", "/auth/signup", "/auth/onboarding"];
+  const isExcludedPath = EXCLUDED_PATHS.some((path) =>
+    pathname.startsWith(path)
+  );
+
+  useEffect(() => {
+    if (user && !isExcludedPath) {
+      fetchProfile(user.id);
+    } else {
+      clearProfile();
+    }
+  }, [user, fetchProfile]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
 
     setTimeout(() => {
       toast.success("Sesión cerrada correctamente.");
-      setTimeout(() => {
-        router.push("/auth/login");
-      }, 3000);
+      router.push("/auth/login");
     });
   };
 

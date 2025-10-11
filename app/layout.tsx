@@ -9,6 +9,7 @@ import { fontSans } from "@/config/fonts";
 import AuthGuard from "@/components/AuthGuard";
 import { Toaster } from "react-hot-toast";
 import Header from "@/components/Header";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -39,8 +40,7 @@ export default function RootLayout({
           <AuthGuard>
             <div className="relative flex flex-col">
               <main className="container mx-auto px-6 flex-grow">
-                <Header />
-                {children}
+                <LayoutWrapper>{children}</LayoutWrapper>
               </main>
             </div>
           </AuthGuard>

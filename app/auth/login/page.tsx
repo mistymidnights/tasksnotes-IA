@@ -41,6 +41,39 @@ export default function LoginPage() {
     }
   };
 
+  // -----------------------------------------------------
+  // Lógica de inicio de sesión con Google OAuth
+  // -----------------------------------------------------
+  const signInWithGoogle = async () => {
+    setError(null);
+    setLoading(true);
+
+    const origin = window.location.origin;
+    const redirectTo = `${origin}/dashboard`;
+
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: redirectTo,
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      if (data.url) {
+        router.push(data.url);
+      }
+    } catch (err) {
+      setError("Error inesperado al iniciar sesión con Google");
+      setLoading(false);
+    }
+  };
+
   const goToSignUp = () => {
     router.push("/auth/signup");
   };
@@ -113,6 +146,48 @@ export default function LoginPage() {
             onPress={goToSignUp}
           >
             Crear cuenta
+          </Button>
+
+          <div className="flex items-center gap-4 my-6">
+            <div className="flex-grow border-t border-gray-700"></div>
+            <span className="text-gray-400 text-sm">O Inicia sesion con :</span>
+            <div className="flex-grow border-t border-gray-700"></div>
+          </div>
+
+          <Button
+            fullWidth
+            color="default"
+            variant="bordered"
+            onPress={signInWithGoogle}
+            className="font-bold flex items-center justify-center gap-2 border-gray-600 text-white hover:bg-gray-800"
+            isLoading={loading && !password}
+            disabled={loading}
+          >
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 48 48"
+              className="w-5 h-5"
+            >
+              <path
+                fill="#EA4335"
+                d="M24 10.5c3.54 0 6.71 1.22 9.21 3.6l6.83-6.83C35.83 2.92 30.09 0 24 0 14.83 0 6.5 4.09 1 10.5l8.52 6.5C11.66 12.02 17.55 10.5 24 10.5z"
+              ></path>
+              <path
+                fill="#4285F4"
+                d="M46.98 24.5c0-1.56-.13-3.09-.36-4.6H24v8.8h12.42c-.61 3.09-2.34 5.74-4.94 7.54l6.83 5.28C43.68 36.71 46.98 30.73 46.98 24.5z"
+              ></path>
+              <path
+                fill="#FBBC05"
+                d="M10.5 28.5c-.75-2.2-1.2-4.52-1.2-7 0-2.48.45-4.8 1.2-7L1.98 10.5C.72 13.51 0 17.06 0 21.5s.72 7.99 1.98 10.99l8.52-6.5z"
+              ></path>
+              <path
+                fill="#34A853"
+                d="M24 47.79c6.43 0 11.95-2.13 15.96-5.87l-6.83-5.28c-2.83 2.07-6.52 3.32-9.13 3.32-5.75 0-10.68-3.56-12.78-8.54l-8.52 6.5C6.5 43.6 14.83 47.79 24 47.79z"
+              ></path>
+              <path fill="none" d="M0 0h48v48H0z"></path>
+            </svg>
+            Iniciar sesión con Google
           </Button>
 
           {error && (
