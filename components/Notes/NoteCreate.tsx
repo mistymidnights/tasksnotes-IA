@@ -124,7 +124,7 @@ const NoteCreate = ({ onClose }: NoteCreateProps) => {
         />
       )}
 
-      <div className="flex items-center gap-2 mt-2">
+      <div className="flex flex-col sm:flex-row gap-2 w-full mt-2">
         <AiActionDropdown
           onAction={(action, lang) =>
             handleAIAction(action as any, description, lang)
