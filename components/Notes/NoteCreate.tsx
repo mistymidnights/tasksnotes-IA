@@ -62,7 +62,11 @@ const NoteCreate = ({ onClose }: NoteCreateProps) => {
   };
 
   return (
-    <Form className="w-full text-black py-8" onSubmit={handleSubmit}>
+    <Form
+      data-theme="light"
+      className="w-full text-black py-8"
+      onSubmit={handleSubmit}
+    >
       <Input
         value={title}
         label="Titulo de la nota"
