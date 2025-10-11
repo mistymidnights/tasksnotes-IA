@@ -180,7 +180,7 @@ export default function OnboardingPage() {
           </Button>
 
           {error && (
-            <div className="bg-red-900 border border-red-400 text-red-300 px-4 py-2 rounded text-sm mt-4 rounded-2xl">
+            <div className="bg-red-900 border border-red-400 text-red-300 px-4 py-2 text-sm mt-4 rounded-2xl">
               <strong>Error:</strong> {error}
             </div>
           )}
